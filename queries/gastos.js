@@ -37,19 +37,21 @@ const deleteGastosQuery = async (id) => {
 };
 
 const editGastoQuery = async (id, gasto) => {
-  try {
-    const gastosJSON = await fs.readFileSync("/data/gastos.json", "utf8");
-    let { gastos } = JSON.parse(gastosJSON);
-    gastos = gastos.map((g) => {
-        if (g.id == id) {
-            const newData = gasto;
-            newData.id = id;
-            return newData;
+    try {
+        const gastosJSON = await fs.readFileSync("data/gastos.json", "utf8");
+        let { gastos } = JSON.parse(gastosJSON);
+        gastos = gastos.map((g) => {
+            if (g.id == id) {
+                const newData = gasto;
+                newData.id = id;
+                return newData;
+            }
+            return g;
+            });
+            await fs.writeFileSync("data/gastos.json", JSON.stringify({ gastos }));
+        } catch (error) {
+            console.log(error.message)
         }
-        return g;
-        });
-        await fs.writeFileSync("/data/gastos.json", JSON.stringify({ gastos }));
-    } catch (error) {}
 };
 
 export {

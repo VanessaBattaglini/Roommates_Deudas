@@ -22,7 +22,7 @@ const addGastos = async (req, res) => {
 
 const deleteGastos = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.query;
     const results = await deleteGastosQuery(id);
     recalcularDeudas();
     console.log(results)
